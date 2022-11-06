@@ -21,9 +21,9 @@ CELL_SIZE = 15
 FONT_SIZE = 20
 COLS = 60
 ROWS = 40
+CAPTION = "GREED GAME"
 WHITE = Color(255, 255, 255)
-DEFAULT_ARTIFACTS = 50
-
+DEFAULT_ARTIFACTS = 100
 
 def main():
     
@@ -53,8 +53,30 @@ def main():
 
 
     for n in range(DEFAULT_ARTIFACTS):
-        text = chr(random.choice([42, 111]))
-        message = "Points:"
+
+        x = random.randint(1, COLS - 1)
+        y = random.randint(1, ROWS - 1)
+        y = y - MAX_Y
+        position = Point(x, y)
+        position = position.scale(CELL_SIZE)
+
+        r = random.randint(0, 255)
+        g = random.randint(0, 255)
+        b = random.randint(0, 255)
+        color = Color(r, g, b)
+        
+        rocks = Artifact()
+        rocks.set_text("o")
+        rocks.set_font_size(FONT_SIZE)
+        rocks.set_color(color)
+        rocks.set_position(position)
+        rocks.set_identity(0)
+        cast.add_actor("artifacts", rocks)
+        rocks.move_next(MAX_X, MAX_Y)
+        
+        
+
+    for n in range(DEFAULT_ARTIFACTS):
 
         x = random.randint(1, COLS - 1)
         y = random.randint(1, ROWS - 1)
@@ -66,19 +88,25 @@ def main():
         b = random.randint(0, 255)
         color = Color(r, g, b)
         
-        artifact = Artifact()
-        artifact.set_text(text)
-        artifact.set_font_size(FONT_SIZE)
-        artifact.set_color(color)
-        artifact.set_position(position)
-        artifact.set_message(message)
-        cast.add_actor("artifacts", artifact)
+        gem = Artifact()
+        gem.set_text("*")
+        gem.set_font_size(FONT_SIZE)
+        gem.set_color(color)
+        gem.set_position(position)
+        gem.set_identity(1)
+        cast.add_actor("artifacts", gem)
+
+
+        
+      
     
     # start the game
     keyboard_service = KeyboardService(CELL_SIZE)
     video_service = VideoService(CAPTION, MAX_X, MAX_Y, CELL_SIZE, FRAME_RATE)
     director = Director(keyboard_service, video_service)
     director.start_game(cast)
+
+
 
 
 if __name__ == "__main__":

@@ -23,6 +23,7 @@ class Actor:
         self._color = Color(255, 255, 255)
         self._position = Point(0, 0)
         self._velocity = Point(0, 0)
+        self._score = 0
 
     def get_color(self):
         """Gets the actor's color as a tuple of three ints (r, g, b).
@@ -115,3 +116,25 @@ class Actor:
             velocity (Point): The given velocity.
         """
         self._velocity = velocity
+
+    def get_score(self):
+        """Gets the score for actor
+        
+        """
+
+        return self._score
+
+    def set_score(self, score):
+        """Updates the score
+        
+        """
+        self._score = score
+
+    def gottem(self, x):
+        """Recieves identity of artifact and adds or subtract points
+
+        """
+        if x == 0:
+            self._score = self._score - 100
+        elif x == 1:
+            self._score = self._score + 100
